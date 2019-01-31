@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" type="text/css">
+</head>
+
+<body onload="init()" onresize="resizeHandler()" style="background-color:#BB8;">
+    
+    
+    <div class="container" id="totalBox">
+        <h1 id="Title" >
+            Click Ripple!
+        </h1>
+
+            <canvas id="myCanvas" style="border:10px;border-style:groove;border-radius:5px; border-color:#88B; background-color:white;" width = 100 height = 100 onclick="clickHandler(event)"></canvas>
+
+            <div id="inCon1" class="title">
+                <div id="inTitle1">
+                    Radius (pixels): 50
+                </div>
+                <input type="range" id="input1" min=1 max=250 class=slider value=50 oninput="feedback1Update()" onchange="feedback1Update()">
+            </div>
+
+            <div id="inCon2" class="title">
+                <div id="inTitle2" class="title">
+                    Period (seconds): 5
+                </div>
+                <input type="range" id="input2" min=0.1 max=10 step=0.1 class=slider value=5 oninput="feedback2Update()" onchange="feedback2Update()">
+            </div>
+
+            <div id="inCon5" class="title">
+                <div id="inTitle5">
+                    Line Weight (pixels): 1
+                </div>
+                <input type="range" id="input5" min=1 max=10 class=slider value=1 oninput="feedback5Update()" onchange="feedback5Update()">
+            </div>
+
+            <div id="fillColor">
+                <div class="title">
+                    Fill Color
+                </div>
+                <input type="color" id="input3" value="#FFFFFF">
+            </div>
+            
+            <div id="lineColor">
+                <div class="title">
+                    Line Color
+                </div>
+                <input type="color" id="input4" value="#000000">
+            </div>
+            
+            <canvas id="myCanvas2" style="border:10px groove; background-color:white;border-color:#88B; " width=100 height=100></canvas>
+            
+            
+            <button onclick="emptyBox()" id="emptyButton" style="margin:10px; background-color:#88B; font-weight:bold;">Clear Screen</button>
+            <button onclick="undoCircle()" id="undoButton" style="margin:10px; background-color:#88B;font-weight:bold;">Undo</button>
+            <button onclick="saveCanvas()" id="saveButton" style="margin:10px; background-color:#88B;font-weight:bold;">Save</button>
+
+        
+    </div>
+    
+    
+</body>
+<script src="scripts.js"></script>
+</html>

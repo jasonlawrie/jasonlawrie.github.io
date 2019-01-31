@@ -1,0 +1,88 @@
+h1{
+    text-align: center;
+    grid-column-start:1;
+    grid-column-end:5;
+    grid-row-start:1;
+    grid-row-end:2;
+}
+.container{
+    /*min-height: 500px;*/
+    /*width: 600px;*/
+    display: grid;
+    grid-template-columns: 20vw 20vw 20vw 20vw;
+    grid-template-rows:5hv 50vh 5vh 5vh 5vh 5vh 5vh 5vh 5vh 5vh 5vh;
+    grid-column-gap:5vw;
+    grid-row-gap:.5vh;
+    justify-items: center
+}
+.title{
+    font-weight:bold;
+    justify-content:center;
+}
+#myCanvas{
+    grid-column-start:1;
+    grid-column-end:5;
+    grid-row-start:2;
+    grid-row-end:3;
+}
+
+#inCon1{
+    grid-column-start:1;
+    grid-column-end:2;
+    grid-row-start:3;
+    grid-row-end:4;
+}
+#inCon2{
+    grid-column-start:1;
+    grid-column-end:2;
+    grid-row-start:4;
+    grid-row-end:5;
+}
+#inCon5{
+    grid-column-start:1;
+    grid-column-end:2;
+    grid-row-start:5;
+    grid-row-end:6;
+}
+
+
+#fillColor{
+    grid-column-start:2;
+    grid-column-end:3;
+    grid-row-start:3;
+    grid-row-end:4;
+}
+#lineColor{
+    grid-column-start:2;
+    grid-column-end:3;
+    grid-row-start:4;
+    grid-row-end:5;
+}
+#myCanvas2{
+    grid-column-start:3;
+    grid-column-end:4;
+    grid-row-start:3;
+    grid-row-end:5;
+}
+
+#emptyButton{
+    grid-column-start:4;
+    grid-column-end:5;
+    grid-row-start:3;
+    grid-row-end:4;
+    justify-self:stretch;
+}
+#undoButton{
+    grid-column-start:4;
+    grid-column-end:5;
+    grid-row-start:4;
+    grid-row-end:5;
+    justify-self:stretch;
+}
+#saveButton{
+    grid-column-start:4;
+    grid-column-end:5;
+    grid-row-start:5;
+    grid-row-end:6;
+    justify-self:stretch;
+}

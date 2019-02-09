@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Spirograph</title>
+    <!--<link rel="stylesheet" href="styles.css" type="text/css">-->
+</head>
+
+<body onload="init()" onresize="resizeHandler()" style="background-color:#BB8;">
+    
+    
+    <div class="container" id="totalBox">
+        <h1 id="Title" >
+            Spirograph
+        </h1>
+        <div height=1000>
+            <div id="canvasHolder" style="position:relative">
+                <canvas id="myCanvas" style="position:absolute; border:10px;border-style:groove;border-radius:5px; border-color:#88B; background-color:white;" width = 100 height = 100></canvas>
+                <canvas id="secCanvas" style="position:absolute; " width = 100 height = 100></canvas>
+            </div>
+        </div>
+            
+            
+
+            <div id="inCon1" class="title">
+                <div id="inTitle1">
+                    Pen Location: 60
+                </div>
+                <input type="range" id="input1" min=10 max=150 class=slider value=50 oninput="feedback1Update()" onchange="feedback1Update()">
+            </div>
+
+            <div id="inCon2" class="title">
+                <div id="inTitle2" class="title">
+                    Small Radius (pixels): 40
+                </div>
+                <input type="range" id="input2" min=10 max=150 class=slider value=40 oninput="feedback2Update()" onchange="feedback2Update()">
+            </div>
+
+            <div id="inCon5" class="title">
+                <div id="inTitle5">
+                    Speed: 5
+                </div>
+                <input type="range" id="input5" min=1 max=10 class=slider value=5 oninput="feedback5Update()" onchange="feedback5Update()">
+            </div>
+
+            <div id="fillColor">
+                <div class="title">
+                    Fill Color
+                </div>
+                <input type="color" id="input3" value="#FF0000">
+            </div>
+            
+            <div id="lineColor">
+                <div class="title">
+                    Pen Color
+                </div>
+                <input type="color" id="input4" value="#000000">
+            </div>
+            
+            
+            
+            <button onclick="Create()" id="emptyButton" style="margin:10px; background-color:#88B; font-weight:bold;">Create</button>
+            <button onclick="undoCircle()" id="undoButton" style="margin:10px; background-color:#88B;font-weight:bold;">Undo</button>
+            <button onclick="saveCanvas()" id="saveButton" style="margin:10px; background-color:#88B;font-weight:bold;">Save</button>
+
+        
+    </div>
+    
+    
+</body>
+<script src="scripts.js"></script>
+</html>

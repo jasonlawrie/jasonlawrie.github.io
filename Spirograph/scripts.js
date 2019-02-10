@@ -7,13 +7,13 @@ var canHeight;
 var can2Width;
 var can2Height;
 
-var pointR=60;
-var smallR=95;
-var bigR=200;
-var bigX=200;
-var bigY=200;
+var pointR;
+var smallR;
+var bigR;
+var bigX;
+var bigY;
 var prevTime;
-var speed=500;
+var speed;
 
 var center = [{x:bigX+bigR, y:bigY}, {x:bigX+bigR, y:bigY}];
 var pen = [{x:bigX+bigR-(smallR-pointR),y:bigY,time:0}, {x:bigX+bigR-(smallR-pointR),y:bigY,time:0}];
@@ -26,9 +26,10 @@ var today = new Date();
 
 function init(){
     startTime=today.getTime();
-    
-    window.requestAnimationFrame(drawCircle);
     resizeHandler();
+
+    window.requestAnimationFrame(drawCircle);
+    
 }
 
 function drawCircle(){
@@ -39,7 +40,8 @@ function drawCircle(){
     var lapseTime = (now.getTime()-startTime)/speed;
     
     //move the center of the traveling circle
-    center.push({x:bigX+Math.cos(lapseTime*smallR/bigR)*(bigR-smallR),y:bigY-Math.sin(lapseTime*smallR/bigR)*(bigR-smallR)});
+    center[0]=center[1];
+    center[1]=({x:bigX+Math.cos(lapseTime*smallR/bigR)*(bigR-smallR),y:bigY-Math.sin(lapseTime*smallR/bigR)*(bigR-smallR)});
 
     //add the location of the next point along the spiral line
     pen[0]=pen[1];
@@ -53,11 +55,11 @@ function drawCircle(){
 
     //redraw the spiral so far
     ctx.strokeStyle=document.getElementById("input4").value;
-    for(var i=3;i<pen.length;i++){
-        if(pen[i].time-pen[i-1].time<50/speed){
+
+        if(pen[1].time-pen[0].time<50/speed){
             ctx.beginPath();
-            ctx.moveTo(pen[i-1].x,pen[i-1].y);
-            ctx.lineTo(pen[i].x,pen[i].y);
+            ctx.moveTo(pen[0].x,pen[0].y);
+            ctx.lineTo(pen[1].x,pen[1].y);
             ctx.stroke();
 
             
@@ -82,22 +84,20 @@ function drawCircle(){
             // ctx.lineTo(pen[i].x-(pen[i].x-center[i].x)*2,pen[i].y-(pen[i].y-center[i].y)*2);
             // ctx.stroke();
         }
-    }
-    ctx.strokeStyle="black";
 
     // // THIS IS THE COOL GLOWY BALL THING
-    // ctx.beginPath();
-    //         var grd = ctx.createRadialGradient(pen[pen.length-1].x,pen[pen.length-1].y,0,pen[pen.length-1].x,pen[pen.length-1].y,500);
-    //         ctx.arc(pen[pen.length-1].x,pen[pen.length-1].y,25,0,360);
-    //         grd.addColorStop(0,document.getElementById("input3").value);
-    //         grd.addColorStop(1,"white");
-    //         ctx.fillStyle=grd;
-    //         ctx.strokeStyle="white";
-    //         ctx.globalAlpha=.5;
-    //         ctx.fill();
-    //         ctx.stroke();
-    //         ctx.strokeStyle="black";
-    //         ctx.globalAlpha=1;
+    ctx.beginPath();
+            var grd = ctx.createRadialGradient(pen[pen.length-1].x,pen[pen.length-1].y,0,pen[pen.length-1].x,pen[pen.length-1].y,500);
+            ctx.arc(pen[pen.length-1].x,pen[pen.length-1].y,25,0,360);
+            grd.addColorStop(0,document.getElementById("input3").value);
+            grd.addColorStop(1,"white");
+            ctx.fillStyle=grd;
+            ctx.strokeStyle="white";
+            ctx.globalAlpha=.5;
+            ctx.fill();
+            ctx.stroke();
+            ctx.strokeStyle="black";
+            ctx.globalAlpha=1;
 
 
 
@@ -132,18 +132,18 @@ function drawCircle(){
     
 
     //draw the pen tip
-    ctx.beginPath();
+    ctx2.beginPath();
     var grd = ctx.createRadialGradient(pen[pen.length-1].x,pen[pen.length-1].y,0,pen[pen.length-1].x,pen[pen.length-1].y,25);
-    ctx.arc(pen[pen.length-1].x,pen[pen.length-1].y,25,0,360);
+    ctx2.arc(pen[pen.length-1].x,pen[pen.length-1].y,25,0,360);
     grd.addColorStop(0,document.getElementById("input3").value);
     grd.addColorStop(1,"white");
-    ctx.fillStyle=grd;
-    ctx.strokeStyle="white";
-    ctx.globalAlpha=.5;
-    ctx.fill();
-    ctx.stroke();
-    ctx.strokeStyle="black";
-    ctx.globalAlpha=1;
+    ctx2.fillStyle=grd;
+    ctx2.strokeStyle="white";
+    ctx2.globalAlpha=.5;
+    ctx2.fill();
+    ctx2.stroke();
+    ctx2.strokeStyle="black";
+    ctx2.globalAlpha=1;
     
 
 
@@ -161,14 +161,20 @@ function Create(){
     bigR=150;
     speed=1000/document.getElementById("input5").value;
 
+    bigX=canWidth/2;
+    bigY=canHeight/2;
     center = [{x:bigX+bigR, y:bigY}, {x:bigX+bigR, y:bigY}];
     pen = [{x:bigX+bigR-(smallR-pointR),y:bigY,time:0}, {x:bigX+bigR-(smallR-pointR),y:bigY,time:0}];
+
 }
+
 function clear(){
     for(i=0;i<center.length;i++){
         pen.pop();
         center.pop();
     }
+    ctx.clearRect(0,0,canWidth,canHeight);
+    ctx2.clearRect(0,0,canWidth,canHeight);
 }
 
 
@@ -178,7 +184,7 @@ function resizeHandler(){
     document.getElementById("secCanvas").setAttribute("width",window.innerWidth*.8);
     document.getElementById("secCanvas").setAttribute("height",window.innerHeight*.5);
     document.getElementById("canvasHolder").style.width=window.innerWidth*.8+"px";
-    document.getElementById("canvasHolder").style.height=window.innerHeight*.5+"px";
+    document.getElementById("canvasHolder").style.height=(window.innerHeight*.5+24)+"px";
 
 
     document.getElementById("totalBox").style=("Width:"+window.innerWidth*.8+"px;");
@@ -186,7 +192,7 @@ function resizeHandler(){
     canHeight=document.getElementById("myCanvas").height;
     can2Width=document.getElementById("secCanvas").width;
     can2Height=document.getElementById("secCanvas").height;
-
+    Create();
 }
 
 function emptyBox(){

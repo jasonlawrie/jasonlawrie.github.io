@@ -1,35 +1,40 @@
-var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
+//define my canvas contexts
+var ctx = document.getElementById("myCanvas").getContext("2d");
 var ctx2 = document.getElementById("secCanvas").getContext("2d");
 
+//declare variables that will hold element dimensions
 var canWidth;
 var canHeight;
 var can2Width;
 var can2Height;
 
+//declare variables that will hold dimensions for the outline and stencil
 var pointR;
 var smallR;
 var bigR;
 var bigX;
 var bigY;
-var prevTime;
-var speed;
-
 var center = [{x:bigX+bigR, y:bigY}, {x:bigX+bigR, y:bigY}];
 var pen = [{x:bigX+bigR-(smallR-pointR),y:bigY,time:0}, {x:bigX+bigR-(smallR-pointR),y:bigY,time:0}];
 //var pen2 = [{x:bigX+bigR-(smallR-pointR*1.1),y:bigY,time:0}, {x:bigX+bigR-(smallR-pointR*1.1),y:bigY,time:0}];
 //var pen3 = [{x:bigX+bigR-(smallR-pointR/2),y:bigY,time:0}, {x:bigX+bigR-(smallR-pointR/2),y:bigY,time:0}];
 
-var startTime=0;
-
+//declare variables that relate to the motion of the image as controlled by the system clock
+var speed;
+var startTime;
 var today = new Date();
 
+//declare boolean variables that will allow user input to change which pattern/path is run
+var simplePath;
+var doublePath;
+var hashPath;
+var glowPath;
+
+//This method will be run once to set up the first display when the page is loaded
 function init(){
     startTime=today.getTime();
     resizeHandler();
-
     window.requestAnimationFrame(drawCircle);
-    
 }
 
 function drawCircle(){
@@ -62,8 +67,6 @@ function drawCircle(){
             ctx.lineTo(pen[1].x,pen[1].y);
             ctx.stroke();
 
-            
-            
             // ctx.beginPath();
             // ctx.moveTo(pen[i-1].x,pen[i-1].y);
             // ctx.lineTo(pen2[i].x,pen2[i].y);
@@ -93,25 +96,20 @@ function drawCircle(){
             grd.addColorStop(1,"white");
             ctx.fillStyle=grd;
             ctx.strokeStyle="white";
-            ctx.globalAlpha=.5;
+            // ctx.globalAlpha=.5;
             ctx.fill();
             ctx.stroke();
             ctx.strokeStyle="black";
-            ctx.globalAlpha=1;
-
-
-
-
-
+            // ctx.globalAlpha=1;
 
     //draw the moving circle
     var fadeOutTime=lapseTime/(4*Math.PI*bigR/smallR)
     ctx2.beginPath();
-    if(fadeOutTime<1){
-        ctx2.globalAlpha=1-fadeOutTime;
-    } else{
-        ctx2.globalAlpha=0;
-    }
+    // if(fadeOutTime<1){
+    //     ctx2.globalAlpha=1-fadeOutTime;
+    // } else{
+    //     ctx2.globalAlpha=0;
+    // }
     ctx2.arc(center[center.length-1].x,center[center.length-1].y,smallR,0,360);
     ctx2.stroke();
 
@@ -126,10 +124,7 @@ function drawCircle(){
     ctx2.lineTo(pen[pen.length-1].x,pen[pen.length-1].y);
     ctx2.stroke();
 
-
-    ctx.globalAlpha=1;
-
-    
+    // ctx.globalAlpha=1;
 
     //draw the pen tip
     ctx2.beginPath();
@@ -139,20 +134,16 @@ function drawCircle(){
     grd.addColorStop(1,"white");
     ctx2.fillStyle=grd;
     ctx2.strokeStyle="white";
-    ctx2.globalAlpha=.5;
+    // ctx2.globalAlpha=.5;
     ctx2.fill();
     ctx2.stroke();
     ctx2.strokeStyle="black";
-    ctx2.globalAlpha=1;
-    
-
-
-    prevTime=lapseTime;
+    // ctx2.globalAlpha=1;
 
     window.requestAnimationFrame(drawCircle);    
 }
 
-function Create(){
+function create(){
     clear();
     var now = new Date;
     startTime=now.getTime();
@@ -160,9 +151,9 @@ function Create(){
     smallR=document.getElementById("input2").value;
     bigR=150;
     speed=1000/document.getElementById("input5").value;
-
     bigX=canWidth/2;
     bigY=canHeight/2;
+    bigR=Math.round(Math.min(bigX,bigY),0);
     center = [{x:bigX+bigR, y:bigY}, {x:bigX+bigR, y:bigY}];
     pen = [{x:bigX+bigR-(smallR-pointR),y:bigY,time:0}, {x:bigX+bigR-(smallR-pointR),y:bigY,time:0}];
 
@@ -187,12 +178,11 @@ function resizeHandler(){
     document.getElementById("canvasHolder").style.height=(window.innerHeight*.5+24)+"px";
 
 
-    document.getElementById("totalBox").style=("Width:"+window.innerWidth*.8+"px;");
     canWidth=document.getElementById("myCanvas").width;
     canHeight=document.getElementById("myCanvas").height;
     can2Width=document.getElementById("secCanvas").width;
     can2Height=document.getElementById("secCanvas").height;
-    Create();
+    create();
 }
 
 function emptyBox(){

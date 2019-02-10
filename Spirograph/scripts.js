@@ -15,9 +15,8 @@ var bigR;
 var bigX;
 var bigY;
 var center = [{x:bigX+bigR, y:bigY}, {x:bigX+bigR, y:bigY}];
-var pen = [{x:bigX+bigR-(smallR-pointR),y:bigY,time:0}, {x:bigX+bigR-(smallR-pointR),y:bigY,time:0}];
-//var pen2 = [{x:bigX+bigR-(smallR-pointR*1.1),y:bigY,time:0}, {x:bigX+bigR-(smallR-pointR*1.1),y:bigY,time:0}];
-//var pen3 = [{x:bigX+bigR-(smallR-pointR/2),y:bigY,time:0}, {x:bigX+bigR-(smallR-pointR/2),y:bigY,time:0}];
+var pen = [{x:bigX+bigR-(smallR-pointR),y:bigY,time:0}, {x:bigX+bigR-(smallR-pointR),y:bigY,time:0},{x:bigX+bigR-(smallR-pointR),y:bigY,time:0},{x:bigX+bigR-(smallR-pointR),y:bigY,time:0}];
+var penScale=1.5;
 
 //declare variables that relate to the motion of the image as controlled by the system clock
 var speed;
@@ -25,22 +24,26 @@ var startTime;
 var today = new Date();
 
 //declare boolean variables that will allow user input to change which pattern/path is run
-var simplePath;
-var doublePath;
-var hashPath;
-var glowPath;
+var simplePath=true;
+var doublePath=true;
+var hashPath=true;
+var glowPath=true;
+var outline=true;
+var stencil=true;
+var wand=true;
+var penTip=true;
 
 //This method will be run once to set up the first display when the page is loaded
 function init(){
     startTime=today.getTime();
     resizeHandler();
     window.requestAnimationFrame(drawCircle);
+    window.requestAnimationFrame(penTip);
 }
 
 function drawCircle(){
 
     //get the current time and modify units for speed
-    //UPDATE THIS TO MAKE NAMES MORE ACCURATE - TIME IS TIME IN SECONDS OR MILLISECONDS AND SPEED IS CALCULATED FROM IT
     var now = new Date();
     var lapseTime = (now.getTime()-startTime)/speed;
     
@@ -51,9 +54,8 @@ function drawCircle(){
     //add the location of the next point along the spiral line
     pen[0]=pen[1];
     pen[1]=({x: Math.cos(lapseTime)*(pointR)+center[center.length-1].x,y: Math.sin(lapseTime)*(pointR)+center[center.length-1].y,time:lapseTime});
-    
-    //pen2.push({x: Math.cos(lapseTime)*(pointR+20)+center[center.length-1].x,y: Math.sin(lapseTime)*(pointR+20)+center[center.length-1].y,time:lapseTime});
-    //pen3.push({x: Math.cos(lapseTime)*(pointR*2)+center[center.length-1].x,y: Math.sin(lapseTime)*(pointR*2)+center[center.length-1].y,time:lapseTime});
+    pen[2]=pen[3];
+    pen[3]=({x: Math.cos(lapseTime)*(pointR)*penScale+center[center.length-1].x,y: Math.sin(lapseTime)*(pointR)*penScale+center[center.length-1].y,time:lapseTime});
 
     //clear the screen
     ctx2.clearRect(0,0,can2Width,can2Height);
@@ -61,86 +63,99 @@ function drawCircle(){
     //redraw the spiral so far
     ctx.strokeStyle=document.getElementById("input4").value;
 
+    if(simplePath){
         if(pen[1].time-pen[0].time<50/speed){
             ctx.beginPath();
             ctx.moveTo(pen[0].x,pen[0].y);
             ctx.lineTo(pen[1].x,pen[1].y);
             ctx.stroke();
-
-            // ctx.beginPath();
-            // ctx.moveTo(pen[i-1].x,pen[i-1].y);
-            // ctx.lineTo(pen2[i].x,pen2[i].y);
-            // ctx.stroke();
-
-            // ctx.beginPath();
-            // ctx.moveTo(pen3[i-1].x,pen3[i-1].y);
-            // ctx.lineTo(pen3[i].x,pen3[i].y);
-            // ctx.stroke();
-
-            // ctx.beginPath();
-            // ctx.moveTo(pen[i-1].x+5,pen[i-1].y);
-            // ctx.lineTo(pen[i].x+5,pen[i].y);
-            // ctx.stroke();
-
-            // ctx.beginPath();
-            // ctx.moveTo(pen[i-1].x-(pen[i-1].x-center[i-1].x)*2,pen[i-1].y-(pen[i-1].y-center[i-1].y)*2);
-            // ctx.lineTo(pen[i].x-(pen[i].x-center[i].x)*2,pen[i].y-(pen[i].y-center[i].y)*2);
-            // ctx.stroke();
-        }
-
-    // // THIS IS THE COOL GLOWY BALL THING
-    ctx.beginPath();
-            var grd = ctx.createRadialGradient(pen[pen.length-1].x,pen[pen.length-1].y,0,pen[pen.length-1].x,pen[pen.length-1].y,500);
-            ctx.arc(pen[pen.length-1].x,pen[pen.length-1].y,25,0,360);
-            grd.addColorStop(0,document.getElementById("input3").value);
-            grd.addColorStop(1,"white");
-            ctx.fillStyle=grd;
-            ctx.strokeStyle="white";
-            // ctx.globalAlpha=.5;
-            ctx.fill();
+        }   
+    }
+    if(doublePath){
+        if(pen[3].time-pen[2].time<50/speed){
+            ctx.beginPath();
+            ctx.moveTo(pen[2].x,pen[2].y);
+            ctx.lineTo(pen[3].x,pen[3].y);
             ctx.stroke();
-            ctx.strokeStyle="black";
-            // ctx.globalAlpha=1;
+        }   
+    }
 
-    //draw the moving circle
-    var fadeOutTime=lapseTime/(4*Math.PI*bigR/smallR)
-    ctx2.beginPath();
-    // if(fadeOutTime<1){
-    //     ctx2.globalAlpha=1-fadeOutTime;
-    // } else{
-    //     ctx2.globalAlpha=0;
-    // }
-    ctx2.arc(center[center.length-1].x,center[center.length-1].y,smallR,0,360);
-    ctx2.stroke();
+    if(hashPath){
+        if(pen[1].time-pen[0].time<50/speed){
+            ctx.beginPath();
+            ctx.moveTo(pen[0].x,pen[0].y);
+            ctx.lineTo(pen[2].x,pen[2].y);
+            //ctx.lineTo(pen[1].x,pen[1].y);
+            ctx.stroke();
+        }  
+    }
 
-    //draw the ouline circle
-    ctx2.beginPath();
-    ctx2.arc(bigX,bigY,bigR,0,360);
-    ctx2.stroke();
+    if(glowPath){
+        // THIS IS THE COOL GLOWY BALL THING
+        ctx.beginPath();
+        var grd = ctx.createRadialGradient(pen[1].x,pen[1].y,0,pen[1].x,pen[1].y,50);
+        ctx.arc(pen[1].x,pen[1].y,25,0,360);
+        grd.addColorStop(0,document.getElementById("input3").value);
+        grd.addColorStop(1,"white");
+        ctx.fillStyle=grd;
+        ctx.strokeStyle="white";
+        ctx.globalAlpha=.5;
+        ctx.fill();
+        ctx.stroke();
+        ctx.strokeStyle="black";
+        ctx.globalAlpha=1;
+    }
 
-    //draw the wand
-    ctx2.beginPath();
-    ctx2.moveTo(center[center.length-1].x,center[center.length-1].y);
-    ctx2.lineTo(pen[pen.length-1].x,pen[pen.length-1].y);
-    ctx2.stroke();
+    if(outline){
+        //draw the ouline circle
+        ctx2.beginPath();
+        ctx2.arc(bigX,bigY,bigR,0,360);
+        ctx2.stroke();
+    }
 
-    // ctx.globalAlpha=1;
+    if(stencil){
+        //draw the moving circle
+        var fadeOutTime=lapseTime/(4*Math.PI*bigR/smallR)
+        ctx2.beginPath();
+        // if(fadeOutTime<1){
+        //     ctx2.globalAlpha=1-fadeOutTime;
+        // } else{
+        //     ctx2.globalAlpha=0;
+        // }
+        ctx2.arc(center[center.length-1].x,center[center.length-1].y,smallR,0,360);
+        ctx2.stroke();
+        // ctx.globalAlpha=1;
+    }
 
-    //draw the pen tip
-    ctx2.beginPath();
-    var grd = ctx.createRadialGradient(pen[pen.length-1].x,pen[pen.length-1].y,0,pen[pen.length-1].x,pen[pen.length-1].y,25);
-    ctx2.arc(pen[pen.length-1].x,pen[pen.length-1].y,25,0,360);
-    grd.addColorStop(0,document.getElementById("input3").value);
-    grd.addColorStop(1,"white");
-    ctx2.fillStyle=grd;
-    ctx2.strokeStyle="white";
-    // ctx2.globalAlpha=.5;
-    ctx2.fill();
-    ctx2.stroke();
-    ctx2.strokeStyle="black";
-    // ctx2.globalAlpha=1;
+    if(wand){
+        //draw the wand
+        ctx2.beginPath();
+        ctx2.moveTo(center[center.length-1].x,center[center.length-1].y);
+        ctx2.lineTo(pen[pen.length-1].x,pen[pen.length-1].y);
+        ctx2.stroke();
+    }
+
+    if(penTip){
+        //draw the pen tip
+        ctx2.beginPath();
+        var grd = ctx2.createRadialGradient(pen[1].x,pen[1].y,0,pen[1].x,pen[1].y,25);
+        ctx2.arc(pen[1].x,pen[1].y,25,0,360);
+        grd.addColorStop(0,document.getElementById("input3").value);
+        grd.addColorStop(1,"white");
+        ctx2.fillStyle=grd;
+        ctx2.strokeStyle="white";
+        ctx2.globalAlpha=.5;
+        ctx2.fill();
+        ctx2.stroke();
+        ctx2.strokeStyle="black";
+        ctx2.globalAlpha=1;
+    }
 
     window.requestAnimationFrame(drawCircle);    
+}
+
+function penTip(){
+
 }
 
 function create(){
@@ -149,14 +164,12 @@ function create(){
     startTime=now.getTime();
     pointR=document.getElementById("input1").value;
     smallR=document.getElementById("input2").value;
-    bigR=150;
     speed=1000/document.getElementById("input5").value;
     bigX=canWidth/2;
     bigY=canHeight/2;
     bigR=Math.round(Math.min(bigX,bigY),0);
     center = [{x:bigX+bigR, y:bigY}, {x:bigX+bigR, y:bigY}];
-    pen = [{x:bigX+bigR-(smallR-pointR),y:bigY,time:0}, {x:bigX+bigR-(smallR-pointR),y:bigY,time:0}];
-
+    pen = [{x:bigX+bigR-(smallR-pointR),y:bigY,time:0}, {x:bigX+bigR-(smallR-pointR),y:bigY,time:0},{x:bigX+(bigR-(smallR-pointR)),y:bigY,time:0},{x:bigX+(bigR-(smallR-pointR*penScale)),y:bigY,time:0}];
 }
 
 function clear(){

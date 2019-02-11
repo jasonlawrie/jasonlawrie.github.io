@@ -24,9 +24,9 @@ var startTime;
 var today = new Date();
 
 //declare boolean variables that will allow user input to change which pattern/path is run
-var simplePath=true;
-var doublePath=true;
-var hashPath=true;
+var simplePath=false;
+var doublePath=false;
+var hashPath=false;
 var glowPath=true;
 var outline=true;
 var stencil=true;
@@ -167,7 +167,12 @@ function create(){
     speed=1000/document.getElementById("input5").value;
     bigX=canWidth/2;
     bigY=canHeight/2;
-    bigR=Math.round(Math.min(bigX,bigY),0);
+    if(pointR>smallR){
+        bigR=Math.round(Math.min(bigX-(pointR-smallR+25),bigY-(pointR-smallR+25)),0);
+    }else{
+        bigR=Math.round(Math.min(bigX,bigY)-25,0);
+    }
+    
     center = [{x:bigX+bigR, y:bigY}, {x:bigX+bigR, y:bigY}];
     pen = [{x:bigX+bigR-(smallR-pointR),y:bigY,time:0}, {x:bigX+bigR-(smallR-pointR),y:bigY,time:0},{x:bigX+(bigR-(smallR-pointR)),y:bigY,time:0},{x:bigX+(bigR-(smallR-pointR*penScale)),y:bigY,time:0}];
 }
@@ -183,18 +188,21 @@ function clear(){
 
 
 function resizeHandler(){
-    document.getElementById("myCanvas").setAttribute("width",window.innerWidth*.8);
-    document.getElementById("myCanvas").setAttribute("height",window.innerHeight*.5);
-    document.getElementById("secCanvas").setAttribute("width",window.innerWidth*.8);
-    document.getElementById("secCanvas").setAttribute("height",window.innerHeight*.5);
+
+    canWidth=Math.max(window.innerWidth*.8,200);
+    canHeight=Math.max(window.innerHeight*.5,200);
+    can2Width=canWidth;
+    can2Height=canHeight;
+
+    document.getElementById("myCanvas").setAttribute("width",canWidth);
+    document.getElementById("myCanvas").setAttribute("height",canHeight);
+    document.getElementById("secCanvas").setAttribute("width",can2Width);
+    document.getElementById("secCanvas").setAttribute("height",can2Height);
     document.getElementById("canvasHolder").style.width=window.innerWidth*.8+"px";
     document.getElementById("canvasHolder").style.height=(window.innerHeight*.5+24)+"px";
 
 
-    canWidth=document.getElementById("myCanvas").width;
-    canHeight=document.getElementById("myCanvas").height;
-    can2Width=document.getElementById("secCanvas").width;
-    can2Height=document.getElementById("secCanvas").height;
+    
     create();
 }
 

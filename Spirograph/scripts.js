@@ -37,6 +37,7 @@ var penTip=true;
 function init(){
     startTime=today.getTime();
     resizeHandler();
+    create();
     window.requestAnimationFrame(drawCircle);
     window.requestAnimationFrame(penTip);
 }
@@ -203,7 +204,7 @@ function resizeHandler(){
 
 
     
-    create();
+    //create();
 }
 
 function emptyBox(){

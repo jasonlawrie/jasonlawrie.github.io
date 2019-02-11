@@ -19,7 +19,7 @@ var pen = [{x:bigX+bigR-(smallR-pointR),y:bigY,time:0}, {x:bigX+bigR-(smallR-poi
 var penScale=1.5;
 
 //declare variables that relate to the motion of the image as controlled by the system clock
-var speed;
+var speed=200;
 var startTime;
 var today = new Date();
 
@@ -62,7 +62,8 @@ function drawCircle(){
     ctx2.clearRect(0,0,can2Width,can2Height);
 
     //redraw the spiral so far
-    ctx.strokeStyle=document.getElementById("input4").value;
+    //ctx.strokeStyle=document.getElementById("input4").value;
+    ctx.strokeStyle="black";
 
     if(simplePath){
         if(pen[1].time-pen[0].time<50/speed){
@@ -165,7 +166,7 @@ function create(){
     startTime=now.getTime();
     pointR=document.getElementById("input1").value;
     smallR=document.getElementById("input2").value;
-    speed=1000/document.getElementById("input5").value;
+    //speed=1000/document.getElementById("input5").value;
     bigX=canWidth/2;
     bigY=canHeight/2;
     if(pointR>smallR){
@@ -223,6 +224,6 @@ function feedback1Update(){
 function feedback2Update(){
     document.getElementById("inTitle2").innerHTML="Small Radius (pixels): " + document.getElementById("input2").value;
 }
-function feedback5Update(){
-    document.getElementById("inTitle5").innerHTML="Speed: " + document.getElementById("input5").value;
-}
+// function feedback5Update(){
+//     document.getElementById("inTitle5").innerHTML="Speed: " + document.getElementById("input5").value;
+// }

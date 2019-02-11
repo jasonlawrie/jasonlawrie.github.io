@@ -24,10 +24,10 @@ var startTime;
 var today = new Date();
 
 //declare boolean variables that will allow user input to change which pattern/path is run
-var simplePath=false;
+var simplePath=true;
 var doublePath=false;
 var hashPath=false;
-var glowPath=true;
+var glowPath=false;
 var outline=true;
 var stencil=true;
 var wand=true;

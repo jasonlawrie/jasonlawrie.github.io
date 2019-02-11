@@ -24,35 +24,35 @@
             
             
 
-            <div id="inCon1" class="title">
+            <div id="inCon1" class="title" style="position:absolute">
                 <div id="inTitle1">
                     Pen Location: 20
                 </div>
                 <input type="range" id="input1" min=10 max=50 class=slider value=20 oninput="feedback1Update()" onchange="feedback1Update()">
             </div>
 
-            <div id="inCon2" class="title">
+            <div id="inCon2" class="title" style="position:absolute">
                 <div id="inTitle2" class="title">
                     Small Radius (pixels): 30
                 </div>
                 <input type="range" id="input2" min=1 max=50 class=slider value=30 oninput="feedback2Update()" onchange="feedback2Update()">
             </div>
 
-            <div id="inCon5" class="title">
+            <div id="inCon5" class="title" style="position:absolute">
                 <div id="inTitle5">
                     Speed: 5
                 </div>
                 <input type="range" id="input5" min=1 max=10 class=slider value=5 oninput="feedback5Update()" onchange="feedback5Update()">
             </div>
 
-            <div id="fillColor">
+            <div id="fillColor" style="position:absolute">
                 <div class="title">
                     Fill Color
                 </div>
                 <input type="color" id="input3" value="#FF0000">
             </div>
             
-            <div id="lineColor">
+            <div id="lineColor" style="position:absolute">
                 <div class="title">
                     Pen Color
                 </div>
@@ -61,9 +61,9 @@
             
             
             
-            <button onclick="create()" id="emptyButton" style="margin:10px; background-color:#88B; font-weight:bold;">Create</button>
-            <button onclick="undoCircle()" id="undoButton" style="margin:10px; background-color:#88B;font-weight:bold;">Undo</button>
-            <button onclick="saveCanvas()" id="saveButton" style="margin:10px; background-color:#88B;font-weight:bold;">Save</button>
+            <button onclick="create()" id="emptyButton" style="margin:10px; background-color:#88B; font-weight:bold; position: absolute">Create</button>
+            <button onclick="undoCircle()" id="undoButton" style="margin:10px; background-color:#88B;font-weight:bold; position: absolute">Undo</button>
+            <button onclick="saveCanvas()" id="saveButton" style="margin:10px; background-color:#88B;font-weight:bold; position: absolute">Save</button>
 
         
     </div>

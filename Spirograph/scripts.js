@@ -131,8 +131,8 @@ function drawCircle(){
     if(wand){
         //draw the wand
         ctx2.beginPath();
-        ctx2.moveTo(center[center.length-1].x,center[center.length-1].y);
-        ctx2.lineTo(pen[pen.length-1].x,pen[pen.length-1].y);
+        ctx2.moveTo(center[1].x,center[1].y);
+        ctx2.lineTo(pen[1].x,pen[1].y);
         ctx2.stroke();
     }
 

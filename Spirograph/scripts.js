@@ -39,7 +39,6 @@ function init(){
     resizeHandler();
     
     window.requestAnimationFrame(drawCircle);
-    window.requestAnimationFrame(penTip);
 }
 
 function drawCircle(){
@@ -156,12 +155,9 @@ function drawCircle(){
     window.requestAnimationFrame(drawCircle);    
 }
 
-function penTip(){
-
-}
-
 function create(){
     clear();
+    feedback6Update();
     var now = new Date;
     startTime=now.getTime();
     pointR=document.getElementById("input1").value;
@@ -227,3 +223,19 @@ function feedback2Update(){
 // function feedback5Update(){
 //     document.getElementById("inTitle5").innerHTML="Speed: " + document.getElementById("input5").value;
 // }
+
+function feedback6Update(){
+    var e = document.getElementById("patternSel");
+    var patSel = e.options[e.selectedIndex].value;
+    simplePath=false;
+    doublePath=false;
+    hashPath=false;
+    glowPath=false;
+    if(patSel=="1") simplePath=true;
+    if(patSel=="2") {
+        simplePath=true;
+        doublePath=true;
+    }
+    if(patSel=="3") hashPath=true;
+    if(patSel=="4") glowPath=true;
+}

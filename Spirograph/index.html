@@ -24,6 +24,7 @@
             
             
         <div id="left" style="display:inline-block; width:40%; text-align:center">
+
             <div id="inCon1" class="title">
                 <div id="inTitle1">
                     Pen Location: 20
@@ -37,6 +38,16 @@
                 </div>
                 <input type="range" id="input2" min=1 max=50 class=slider value=30 oninput="feedback2Update()" onchange="feedback2Update()">
             </div>
+
+            <div>
+                <select id="patternSel">
+                    <option value="1" selected="Selected">Simple</option>
+                    <option value="2">Double</option>
+                    <option value="3">Hash</option>
+                    <option value="4">Glow</option>
+                </select>
+            </div>
+            
         </div>
             <!--<div id="inCon5" class="title">
                 <div id="inTitle5">

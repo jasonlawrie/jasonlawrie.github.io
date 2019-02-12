@@ -12,7 +12,7 @@
     
     
     <div class="container" id="totalBox">
-        <h1 id="Title" >
+        <h1 id="Title" style="text-align:center" >
             Spirograph
         </h1>
         <div height=1000>
@@ -22,56 +22,49 @@
             </div>
         </div>
             
-            
-        <div id="left" style="display:inline-block; width:40%; text-align:center">
-
-            <div id="inCon1" class="title">
-                <div id="inTitle1">
-                    Pen Location: 20
+        <div style="text-align:center">
+            <div id="left" style="display:inline-block;border:3px;  width:33%;min-width:135px; text-align:center; vertical-align:top;border-style:solid; border-radius:10px; padding:2%; margin:1% 5% 1% 5%; border-color:#77A; background-color:white">
+                <div id="inCon1" class="title">
+                    <div id="inTitle1">
+                        Size: 20
+                    </div>
+                    <input type="range" id="input1" min=10 max=50 class=slider value=20 oninput="feedback1Update()" onchange="feedback1Update()">
                 </div>
-                <input type="range" id="input1" min=10 max=50 class=slider value=20 oninput="feedback1Update()" onchange="feedback1Update()">
-            </div>
-
-            <div id="inCon2" class="title">
-                <div id="inTitle2">
-                    Small Radius (pixels): 30
+                <div id="inCon2" class="title">
+                    <div id="inTitle2">
+                        Nodes: 5
+                    </div>
+                    <input type="range" id="input2" min=3 max=50 class=slider value=5 oninput="feedback2Update()" onchange="feedback2Update()">
                 </div>
-                <input type="range" id="input2" min=1 max=50 class=slider value=30 oninput="feedback2Update()" onchange="feedback2Update()">
+                <div id="inCon5" class="title">
+                    <div id="inTitle5">
+                        Pattern: 1
+                    </div>
+                    <input type="range" id="input5" min=1 max=2 class=slider value=1 oninput="feedback5Update()" onchange="feedback5Update()">
+                </div>
             </div>
-
-            <div>
-                <select id="patternSel">
-                    <option value="1" selected="Selected">Simple</option>
-                    <option value="2">Double</option>
-                    <option value="3">Hash</option>
-                    <option value="4">Glow</option>
-                </select>
+            <div id="right" style="display:inline-block;border:3px;  width:33%;min-width:135px; text-align:center; vertical-align:top;border-style:solid; border-radius:10px; padding:2%; margin:1% 5% 1% 5%; border-color:#77A; background-color:white">
+                <div id="fillColor">
+                    <div class="title">
+                        Fill Color
+                    </div>
+                    <input type="color" id="input3" value="#FF0000">
+                </div>
+                <div>
+                    <select id="patternSel">
+                        <option value="1" selected="Selected">Simple Pattern</option>
+                        <option value="2">Double Pattern</option>
+                        <option value="3">Hash Pattern</option>
+                        <option value="4">Glow Pattern</option>
+                    </select>
+                </div>
+                <button onclick="create()" id="emptyButton" style="margin:10px; background-color:#88B; font-weight:bold">Create</button>
             </div>
-            
         </div>
-            <!--<div id="inCon5" class="title">
-                <div id="inTitle5">
-                    Speed: 5
-                </div>
-                <input type="range" id="input5" min=1 max=10 class=slider value=5 oninput="feedback5Update()" onchange="feedback5Update()">
-            </div>-->
-        <div id="right" style="display:inline-block; width:40%; text-align:center">
-            <div id="fillColor">
-                <div class="title">
-                    Fill Color
-                </div>
-                <input type="color" id="input3" value="#FF0000">
-            </div>
             
-            <!--<div id="lineColor">
-                <div class="title">
-                    Pen Color
-                </div>
-                <input type="color" id="input4" value="#000000">
-            </div>-->
         
-            <button onclick="create()" id="emptyButton" style="margin:10px; background-color:#88B; font-weight:bold">Create</button>
-        </div>
+        
+        
     </div>
         
 </body>

@@ -160,16 +160,15 @@ function create(){
     feedback6Update();
     var now = new Date;
     startTime=now.getTime();
-    pointR=document.getElementById("input1").value;
-    smallR=document.getElementById("input2").value;
+    
     //speed=1000/document.getElementById("input5").value;
     bigX=canWidth/2;
     bigY=canHeight/2;
-    if(pointR>smallR){
-        bigR=Math.round(Math.min(bigX-(pointR-smallR+25),bigY-(pointR-smallR+25)),0);
-    }else{
-        bigR=Math.round(Math.min(bigX,bigY)-25,0);
-    }
+
+    bigR=Math.round(Math.min(bigX,bigY)-50,0);
+    
+    pointR=document.getElementById("input1").value;
+    smallR=bigR*document.getElementById("input5").value/(document.getElementById("input2").value-document.getElementById("input5").value);
     
     center = [{x:bigX+bigR, y:bigY}, {x:bigX+bigR, y:bigY}];
     pen = [{x:bigX+bigR-(smallR-pointR),y:bigY,time:0}, {x:bigX+bigR-(smallR-pointR),y:bigY,time:0},{x:bigX+(bigR-(smallR-pointR)),y:bigY,time:0},{x:bigX+(bigR-(smallR-pointR*penScale)),y:bigY,time:0}];
@@ -196,8 +195,8 @@ function resizeHandler(){
     document.getElementById("myCanvas").setAttribute("height",canHeight);
     document.getElementById("secCanvas").setAttribute("width",can2Width);
     document.getElementById("secCanvas").setAttribute("height",can2Height);
-    document.getElementById("canvasHolder").style.width=window.innerWidth*.8+"px";
-    document.getElementById("canvasHolder").style.height=(window.innerHeight*.5+24)+"px";
+    document.getElementById("totalBox").style.width=canWidth+"px";
+    document.getElementById("canvasHolder").style.height=(canHeight+24)+"px";
 
 
     
@@ -215,14 +214,17 @@ function saveCanvas(){
 
 function feedback1Update(){
     
-    document.getElementById("inTitle1").innerHTML="Pen Location: " + document.getElementById("input1").value;
+    document.getElementById("inTitle1").innerHTML="Size: " + document.getElementById("input1").value;
 }
 function feedback2Update(){
-    document.getElementById("inTitle2").innerHTML="Small Radius (pixels): " + document.getElementById("input2").value;
+    document.getElementById("inTitle2").innerHTML="Nodes: " + document.getElementById("input2").value;
+    document.getElementById("input5").setAttribute("max",Math.trunc((document.getElementById("input2").value-.25)/2));
+    document.getElementById("input5").value=1;
+    feedback5Update();
 }
-// function feedback5Update(){
-//     document.getElementById("inTitle5").innerHTML="Speed: " + document.getElementById("input5").value;
-// }
+function feedback5Update(){
+    document.getElementById("inTitle5").innerHTML="Pattern: " + document.getElementById("input5").value;
+}
 
 function feedback6Update(){
     var e = document.getElementById("patternSel");

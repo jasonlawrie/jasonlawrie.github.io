@@ -186,7 +186,7 @@ function clear(){
 
 function resizeHandler(){
 
-    canWidth=Math.max(window.innerWidth*.8,200);
+    canWidth=Math.max(window.innerWidth*.9,200);
     canHeight=Math.max(window.innerHeight*.5,200);
     can2Width=canWidth;
     can2Height=canHeight;

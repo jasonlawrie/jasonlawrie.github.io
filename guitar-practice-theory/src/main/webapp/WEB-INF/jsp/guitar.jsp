@@ -5,7 +5,7 @@
 
 
 	<h1>Guitar Practice</h1>
-		
+	
 		
 		
 <%@include file="common/footer.jspf" %>

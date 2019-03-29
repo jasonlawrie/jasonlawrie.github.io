@@ -11,7 +11,8 @@ public class GuitarController {
 
 	@RequestMapping("/")
 	public String displayGreeting() {
-		
+		//I want to give the user a SINGLE, RANDOM chord
+		String[] keyOptions = new String[12];
 		return "guitar";
 	}
 }
